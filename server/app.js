@@ -4,7 +4,7 @@ var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
-var CONNECTION_STRING = 'mongodb://docker:27017/todosdb';
+var CONNECTION_STRING = 'mongodb://localhost:27017/todosdb';
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));

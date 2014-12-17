@@ -33,14 +33,6 @@ $(function() {
     HELPER METHODS
    */
 
-  // return a <li> jQuery elem
-  /*
-    todo_doc = {
-      _id : "32 bit hex",
-      title : "string",
-      completed : "boolean as string"
-    }
-   */
   function buildTodoItem ( todo_doc ) {
     
     var list_item = $('<li>',{
