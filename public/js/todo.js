@@ -20,6 +20,17 @@ $(function() {
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
       createNewTodo();
+      $('img#marker').fadeIn('fast', function() {
+        $('img#marker').animate({
+          marginLeft: '300px'
+        },100, function() {
+          $('img#marker').animate({
+            marginLeft: '-300px'
+          },'slow', function() {
+            $('img#marker').fadeOut();
+          });
+        });
+      });
     }
   });
 
@@ -104,14 +115,14 @@ $(function() {
     var parent_li = button.closest("li");
     var object_id = parent_li.data("object-id");
 
-    $('img').fadeIn('fast', function() {
-      $('img').animate({
+    $('img#eraser').fadeIn('fast', function() {
+      $('img#eraser').animate({
         marginLeft: '300px'
-      },function() {
-        $('img').animate({
+      },100, function() {
+        $('img#eraser').animate({
           marginLeft: '-300px'
-        },function() {
-          $('img').fadeOut();
+        },'slow', function() {
+          $('img#eraser').fadeOut();
         });
       });
     });
