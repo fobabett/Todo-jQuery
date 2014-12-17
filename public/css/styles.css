@@ -69,4 +69,20 @@ h1 {
   font-family: 'Just Another Hand';
   font-size: 30px;
   color: #7500FF;
+  /*border: 2px solid blue;*/
+  /*position: fixed;*/
+  z-index: 10;
+}
+
+#img_container {
+  /*border: 2px solid red;*/
+  /*position: fixed;*/
+  z-index: 11;
+  margin-top: -50px;
+}
+
+img#eraser {
+  display: none;
+  margin-left: 150px;
+  margin-top: 0px;
 }

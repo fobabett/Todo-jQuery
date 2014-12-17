@@ -50,6 +50,7 @@ $(function() {
     });
 
     var list_delete = $('<button>', {
+      id: 'delete',
       text : "[delete]",
       click : click_delete_item_handler
     });
@@ -95,12 +96,27 @@ $(function() {
     EVENT HANDLERS
   */
 
+
   // http DELETE then delete it's parent li
   function click_delete_item_handler (e) {
 
     var button = $(e.currentTarget);
     var parent_li = button.closest("li");
     var object_id = parent_li.data("object-id");
+
+    $('img').fadeIn('fast', function() {
+       $('img').animate({
+      marginLeft: '500px'
+      }, 1000, function() {
+        $('img').fadeOut(function() {
+          $('img').animate({
+            marginLeft: '-5px'
+          }, function() {
+            console.log('animation complete');
+          });
+        });
+      });
+    });
 
     $.ajax( '/items/' + object_id ,
       {
