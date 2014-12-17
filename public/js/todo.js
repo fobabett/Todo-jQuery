@@ -105,15 +105,13 @@ $(function() {
     var object_id = parent_li.data("object-id");
 
     $('img').fadeIn('fast', function() {
-       $('img').animate({
-      marginLeft: '500px'
-      }, 1000, function() {
-        $('img').fadeOut(function() {
-          $('img').animate({
-            marginLeft: '-5px'
-          }, function() {
-            console.log('animation complete');
-          });
+      $('img').animate({
+        marginLeft: '300px'
+      },function() {
+        $('img').animate({
+          marginLeft: '-300px'
+        },function() {
+          $('img').fadeOut();
         });
       });
     });
