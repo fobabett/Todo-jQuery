@@ -1,9 +1,10 @@
-var MongoClient = require('mongodb').MongoClient;
-var fs = require('fs');
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
-var CONNECTION_STRING = 'mongodb://localhost:27017/todosdb';
+var CONNECTION_STRING = 'mongodb://docker:27017/todosdb';
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,32 +16,97 @@ function connect_to_db (cb) {
     }
     var collection = db.collection('todos');
 
-    cb( collection );
+    cb( db, collection );
+
   });
 }
 
-app.post('/item', function (req, res) {
-
-  connect_to_db( function ( collection ) {
-    var new_todo_item_to_be_inserted = req.body.new_item;
-
-    collection.insert( new_todo_item_to_be_inserted, function (err, obj) {
-      
-      console.log('err', err);
-      console.log('obj', obj);
-      res.send(obj);
+/*
+  LIST
+  GET /items
+ */
+app.get('/items',function (req, res) {
+  
+  connect_to_db( function ( db, collection ) {
+    collection.find({}).toArray(function (err, docs) {
+      db.close();
+      res.send(docs);
     });
   });
 
-  app.get('/items', function (req, res) {
-    connect_to_db( function (collection) {
+});
 
-      collection.find({}).toArray(function(err, docs) {
-        
-      });
+/*
+  CREATE
+  POST /items
+ */
+app.post('/items',function (req, res) {
+  
+  connect_to_db( function ( db, collection ) {
+    var new_todo_item_to_be_inserted = req.body.new_item;
+
+    collection.insert( new_todo_item_to_be_inserted, function (err, docs) {
+      db.close();
+      res.send( docs[0]._id );
+    });
+  });
+
+});
+
+/*
+  UPDATE completed status
+  PUT /items/:id/:status
+ */
+app.put('/items/:id/:status',function (req, res) {
+  
+  connect_to_db( function ( db, collection ) {
+    var todo_id = req.params.id;
+    var todo_completed_status = req.params.status;
+
+    // collection.update(criteria, objNew, options, [callback]);
+    collection.update(
+      { '_id' : new ObjectID(todo_id) },    // criteria
+      {
+        $set: {
+          completed : todo_completed_status
+        }
+      },                                    // objNew
+      {w:1},                                // options
+      function(err) {                       // callback
+        var success;
+        if (err){
+          success = false;
+          console.warn(err.message);
+        }else{
+          success = true;
+          console.log('successfully updated');
+        }
+
+        db.close();
+        res.json( { success : success } );
+      }
+    );
+  });
+
+});
+
+/*
+  DESTROY
+  DELETE /items/:id
+ */
+app.delete('/items/:id',function (req, res) {
+  connect_to_db( function ( db, collection ) {
+    var _id = req.params.id;
+    collection.remove({"_id": new ObjectID( _id )}, function (err, result) {
+      if( err ) throw err;
+      
+      db.close();
+      res.json({ success : "success" });
     });
   });
 });
+
+
 
 var server = app.listen(3000, function () {
 
@@ -49,13 +115,3 @@ var server = app.listen(3000, function () {
 
   console.log('Example app listening at http://%s:%s', host, port)
 });
-
-function saveTodoList(content) {
-  fs.writeFile('./public/todo_save.json', content, function (err) {
-    if(err) {
-      console.log('error');
-    } else {
-      console.log('successfully saved todo_save.json');
-    }
-  });
-}
