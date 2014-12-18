@@ -13,36 +13,23 @@ $(function() {
     })
 
   });
-
-
   // on press enter, save new todo
-
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
       createNewTodo();
       $('img#marker').fadeIn('fast', function() {
         $('img#marker').animate({
           marginLeft: '300px'
-        },100, function() {
+        },1000, function() {
           $('img#marker').animate({
             marginLeft: '-300px'
-          },'slow', function() {
+          },100, function() {
             $('img#marker').fadeOut();
           });
         });
       });
     }
   });
-
-
-
-
-
-
-  /*
-  
-    HELPER METHODS
-   */
 
   function buildTodoItem ( todo_doc ) {
     
@@ -62,7 +49,7 @@ $(function() {
 
     var list_delete = $('<button>', {
       id: 'delete',
-      text : "[delete]",
+      text : "[x]",
       click : click_delete_item_handler
     });
 
@@ -101,13 +88,6 @@ $(function() {
     });
 
   }
-
-  /*
-    
-    EVENT HANDLERS
-  */
-
-
   // http DELETE then delete it's parent li
   function click_delete_item_handler (e) {
 
@@ -118,24 +98,24 @@ $(function() {
     $('img#eraser').fadeIn('fast', function() {
       $('img#eraser').animate({
         marginLeft: '300px'
-      },100, function() {
+      },1000, function() {
+        $.ajax( '/items/' + object_id ,
+          {
+            type : "DELETE",
+            success : function (data) {
+              parent_li.remove();
+              console.log('data',data);
+            }
+          }
+        );
         $('img#eraser').animate({
           marginLeft: '-300px'
-        },'slow', function() {
+        },100, function() {
           $('img#eraser').fadeOut();
         });
       });
     });
 
-    $.ajax( '/items/' + object_id ,
-      {
-        type : "DELETE",
-        success : function (data) {
-          parent_li.remove();
-          console.log('data',data);
-        }
-      }
-    );
   }
 
   // http PUT to update completed status
@@ -154,11 +134,6 @@ $(function() {
     );
 
   }
-
-
-
-  
-
   // CROSS OUT LIST ITEM IF BOX CHECKED
   $('ul').on('change', 'input[type=checkbox]', function() {
     if(this.checked) {
