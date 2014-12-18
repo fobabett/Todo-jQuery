@@ -90,6 +90,6 @@ img#eraser {
 img#marker {
   display: none;
   margin-left: 200px;
-  margin-top: -30px;
+  /*margin-top: -30px;*/
   width: 50px;
 }

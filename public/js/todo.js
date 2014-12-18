@@ -23,7 +23,7 @@ $(function() {
           createNewTodo();
           $('img#marker').animate({
             marginLeft: '-300px'
-          },100, function() {
+          },1000, function() {
             $('img#marker').fadeOut();
           });
         });
@@ -110,7 +110,7 @@ $(function() {
         );
         $('img#eraser').animate({
           marginLeft: '-300px'
-        },100, function() {
+        },1000, function() {
           $('img#eraser').fadeOut();
         });
       });
