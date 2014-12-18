@@ -8,7 +8,7 @@ $(function() {
 
     });
   });
-  // on press enter, save new todo
+  // on press enter, save new todo item and trigger marker animation
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
       $('img#marker').fadeIn('fast', function() {
@@ -80,7 +80,7 @@ $(function() {
       $('ul#todo_list').append( buildTodoItem( post_data.new_item ) );
     });
   }
-  // http DELETE then delete it's parent li
+  // http DELETE then delete it's parent li and trigger eraser animation
   function click_delete_item_handler (e) {
 
     var button = $(e.currentTarget);
