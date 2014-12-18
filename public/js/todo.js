@@ -127,6 +127,8 @@ $(function() {
   $('ul').on('change', 'input[type=checkbox]', function() {
     if(this.checked) {
       $(this).siblings().css('text-decoration', 'line-through');
+      // if checked save to /items ...
+      
     } else {
       console.log("uncheck");
       $(this).siblings().css('text-decoration', 'none');
