@@ -5,7 +5,9 @@ $(function() {
     docs.forEach(function (doc) {
       
       $('ul#todo_list').append( buildTodoItem( doc ) )
-
+      // ITEMS COMPLETED/ITEMS LEFT TO-DO COUNTER
+      var list_count = $('#todo_list li').size();
+      console.log(list_count);
     });
   });
   // on press enter, save new todo item and trigger marker animation
@@ -128,7 +130,7 @@ $(function() {
     if(this.checked) {
       $(this).siblings().css('text-decoration', 'line-through');
       // if checked save to /items ...
-      
+
     } else {
       console.log("uncheck");
       $(this).siblings().css('text-decoration', 'none');
