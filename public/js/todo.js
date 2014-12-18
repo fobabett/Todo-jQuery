@@ -5,10 +5,11 @@ $(function() {
     docs.forEach(function (doc) {
       
       $('ul#todo_list').append( buildTodoItem( doc ) )
-      // ITEMS COMPLETED/ITEMS LEFT TO-DO COUNTER
-      var list_count = $('#todo_list li').size();
-      console.log(list_count);
     });
+    listCounter();
+    // // ITEMS COMPLETED/ITEMS LEFT TO-DO COUNTER
+    // var list_count = $('#todo_list li').size();
+    // console.log(list_count);
   });
   // on press enter, save new todo item and trigger marker animation
   $( "#target" ).keydown(function(event) {
@@ -18,6 +19,10 @@ $(function() {
           marginLeft: '300px'
         },1000, function() {
           createNewTodo();
+          listCounter();
+          // // ITEMS COMPLETED/ITEMS LEFT TO-DO COUNTER
+          // var list_count = $('#todo_list li').size();
+          // console.log(list_count + 1);
           $('img#marker').animate({
             marginLeft: '-300px'
           },1000, function() {
@@ -27,6 +32,7 @@ $(function() {
       });
     }
   });
+
 
   function buildTodoItem ( todo_doc ) {
     
@@ -60,6 +66,12 @@ $(function() {
       .append( list_delete );
     
     return list_item;
+  }
+
+  function listCounter () {
+    // ITEMS COMPLETED/ITEMS LEFT TO-DO COUNTER
+    var list_count = $('#todo_list li').size();
+    console.log(list_count);
   }
 
   function createNewTodo () {
@@ -102,6 +114,7 @@ $(function() {
             }
           }
         );
+        listCounter();
         $('img#eraser').animate({
           marginLeft: '-300px'
         },1000, function() {
