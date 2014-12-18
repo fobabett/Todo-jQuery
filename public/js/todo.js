@@ -16,11 +16,11 @@ $(function() {
   // on press enter, save new todo
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
-      createNewTodo();
       $('img#marker').fadeIn('fast', function() {
         $('img#marker').animate({
           marginLeft: '300px'
         },1000, function() {
+          createNewTodo();
           $('img#marker').animate({
             marginLeft: '-300px'
           },100, function() {
