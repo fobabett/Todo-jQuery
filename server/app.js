@@ -21,10 +21,6 @@ function connect_to_db (cb) {
   });
 }
 
-/*
-  LIST
-  GET /items
- */
 app.get('/items',function (req, res) {
   
   connect_to_db( function ( db, collection ) {
@@ -36,10 +32,7 @@ app.get('/items',function (req, res) {
 
 });
 
-/*
-  CREATE
-  POST /items
- */
+
 app.post('/items',function (req, res) {
   
   connect_to_db( function ( db, collection ) {
@@ -53,26 +46,21 @@ app.post('/items',function (req, res) {
 
 });
 
-/*
-  UPDATE completed status
-  PUT /items/:id/:status
- */
 app.put('/items/:id/:status',function (req, res) {
   
   connect_to_db( function ( db, collection ) {
     var todo_id = req.params.id;
     var todo_completed_status = req.params.status;
 
-    // collection.update(criteria, objNew, options, [callback]);
     collection.update(
-      { '_id' : new ObjectID(todo_id) },    // criteria
+      { '_id' : new ObjectID(todo_id) },   
       {
         $set: {
           completed : todo_completed_status
         }
-      },                                    // objNew
-      {w:1},                                // options
-      function(err) {                       // callback
+      },                                   
+      {w:1},                               
+      function(err) {                       
         var success;
         if (err){
           success = false;
@@ -90,10 +78,6 @@ app.put('/items/:id/:status',function (req, res) {
 
 });
 
-/*
-  DESTROY
-  DELETE /items/:id
- */
 app.delete('/items/:id',function (req, res) {
   connect_to_db( function ( db, collection ) {
     var _id = req.params.id;
@@ -105,8 +89,6 @@ app.delete('/items/:id',function (req, res) {
     });
   });
 });
-
-
 
 var server = app.listen(3000, function () {
 
