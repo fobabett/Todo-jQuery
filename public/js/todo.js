@@ -1,17 +1,12 @@
 $(function() {
-
-  // on page load, get all todos
-  
+  // on page load, get all list items
   $.get('/items', function (docs) {
-    
-    // render items
-    
+
     docs.forEach(function (doc) {
       
       $('ul#todo_list').append( buildTodoItem( doc ) )
 
-    })
-
+    });
   });
   // on press enter, save new todo
   $( "#target" ).keydown(function(event) {
@@ -65,7 +60,6 @@ $(function() {
     return list_item;
   }
 
-  //
   function createNewTodo () {
     
     var user_input = $('#target').val();
@@ -84,9 +78,7 @@ $(function() {
       
       post_data.new_item._id = new_todo_id;
       $('ul#todo_list').append( buildTodoItem( post_data.new_item ) );
-
     });
-
   }
   // http DELETE then delete it's parent li
   function click_delete_item_handler (e) {
@@ -115,9 +107,7 @@ $(function() {
         });
       });
     });
-
   }
-
   // http PUT to update completed status
   function change_completed_status (e) {
     var checkbox = $( e.currentTarget );
@@ -132,7 +122,6 @@ $(function() {
         }
       }
     );
-
   }
   // CROSS OUT LIST ITEM IF BOX CHECKED
   $('ul').on('change', 'input[type=checkbox]', function() {
