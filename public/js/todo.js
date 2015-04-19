@@ -1,4 +1,3 @@
-$(function() {
   // on page load, get all list items
   $.get('/items', function (docs) {
 
